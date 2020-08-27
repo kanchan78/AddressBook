@@ -11,9 +11,10 @@ public class Contact {
     private Date birthdate;
     private String contact;
     private String full_address;
+    private int zip_code;
     private boolean review;
 
-    public Contact(int contact_id, String first_name, String last_name, String city, Date birthdate, String contact, String full_address, boolean review) {
+    public Contact(int contact_id, String first_name, String last_name, String city, Date birthdate, String contact,int zip_code, String full_address, boolean review) {
         this.contact_id = contact_id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -21,6 +22,7 @@ public class Contact {
         this.birthdate = birthdate;
         this.contact = contact;
         this.full_address = full_address;
+        this.zip_code  = zip_code;
         this.review = review;
     }
 
@@ -89,6 +91,14 @@ public class Contact {
 
     public void setReview(boolean review) {
         this.review = review;
+    }
+
+    public int getZip_code() {
+        return zip_code;
+    }
+
+    public void setZip_code(int zip_code) {
+        this.zip_code = zip_code;
     }
 
 }

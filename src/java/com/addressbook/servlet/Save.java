@@ -40,8 +40,8 @@ public class Save extends HttpServlet {
             String faddr = request.getParameter("faddr");
 
             boolean rview = Boolean.parseBoolean(request.getParameter("rview"));
-
-            Contact contact1 = new Contact(conid, fname, lname, cityn, sqlDate, contc, faddr, rview);
+int zpcod = Integer.parseInt(request.getParameter("zpcod"));
+            Contact contact1 = new Contact(conid, fname, lname, cityn, sqlDate, contc,zpcod, faddr, rview);
 
             ContactDao dao = new ContactDao(ConnectionProvider.getConnection());
 

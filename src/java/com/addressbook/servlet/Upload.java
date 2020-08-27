@@ -3,6 +3,7 @@ package com.addressbook.servlet;
 import com.addressbook.dao.ContactDao;
 import com.addressbook.entities.Contact;
 import com.addressbook.helper.ConnectionProvider;
+import com.opencsv.CSVReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,29 +32,50 @@ public class Upload extends HttpServlet {
             Thread.sleep(1000);
             Part part = request.getPart("csvfile");
             String fileName = part.getSubmittedFileName();
-
-            List<Contact> contacts = new ArrayList<>();
-            String line = "";
-            String splitBy = ",";
-
             InputStream fileContent = part.getInputStream();
-            BufferedReader br = new BufferedReader(new InputStreamReader(fileContent));
-
-            while ((line = br.readLine()) != null) {
-                String[] record = line.split(splitBy);
+            ///Using CSV Reader
+            List<Contact> contacts = new ArrayList<>();
+            CSVReader reader = null;
+            reader = new CSVReader(new InputStreamReader(fileContent));
+            String[] nextLine;
+            while ((nextLine = reader.readNext()) != null) {
                 Contact contact = new Contact();
-                contact.setFirst_name(record[0]);
-                contact.setLast_name(record[1]);
-                contact.setCity(record[2]);
-                String date = record[3];
+                contact.setFirst_name(nextLine[0]);
+                contact.setLast_name(nextLine[1]);
+                contact.setCity(nextLine[2]);
+                String date = nextLine[3];
                 java.util.Date dt1 = new SimpleDateFormat("MM/dd/yyyy").parse(date);
                 java.sql.Date sqlDate = new java.sql.Date(dt1.getTime());
                 contact.setBirthdate(sqlDate);
-                contact.setContact(record[4]);
-                contact.setFull_address(record[5]);
+                contact.setContact(nextLine[4]);
+                contact.setFull_address(nextLine[5]);
+                contact.setZip_code(Integer.parseInt(nextLine[6]));
                 contacts.add(contact);
             }
 
+            ////
+//            List<Contact> contacts = new ArrayList<>();
+//            String line = "";
+//            String splitBy = ",";
+//
+//            InputStream fileContent = part.getInputStream();
+//            BufferedReader br = new BufferedReader(new InputStreamReader(fileContent));
+//
+//            while ((line = br.readLine()) != null) {
+//                String[] record = line.split(splitBy);
+//                Contact contact = new Contact();
+//                contact.setFirst_name(record[0]);
+//                contact.setLast_name(record[1]);
+//                contact.setCity(record[2]);
+//                String date = record[3];
+//                java.util.Date dt1 = new SimpleDateFormat("MM/dd/yyyy").parse(date);
+//                java.sql.Date sqlDate = new java.sql.Date(dt1.getTime());
+//                contact.setBirthdate(sqlDate);
+//                contact.setContact(record[4]);
+//                contact.setFull_address(record[5]);
+//                contact.setZip_code(Integer.parseInt(record[6]));
+//                contacts.add(contact);
+//            }
             ContactDao dao = new ContactDao(ConnectionProvider.getConnection());
 
             if (dao.saveContact(contacts) == true) {

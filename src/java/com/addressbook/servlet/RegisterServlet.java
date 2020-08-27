@@ -40,9 +40,9 @@ public class RegisterServlet extends HttpServlet {
             String contc = request.getParameter("contc");
 
             String faddr = request.getParameter("faddr");
-
+            int zpcod = Integer.parseInt(request.getParameter("zpcod"));
             boolean rview = Boolean.parseBoolean(request.getParameter("rview"));
-            Contact contact1 = new Contact(0, fname, lname, cityn, sqlDate, contc, faddr, rview);
+            Contact contact1 = new Contact(0, fname, lname, cityn, sqlDate, contc,zpcod, faddr, rview);
             contacts.add(contact1);
             ContactDao dao = new ContactDao(ConnectionProvider.getConnection());
 

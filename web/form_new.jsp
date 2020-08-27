@@ -70,16 +70,23 @@
                                             <small id="contact-field-msg"></small>
                                         </div>
                                         <div class="col-md-4 mb-3">
-                                            <label for="validationDefault05">Date</label>
+                                            <label for="validationDefault05">Date of Birth</label>
                                             <input class="form-control" name="bdate"type="Date">
 
                                         </div>
                                     </div>
                                     <div class="form-row">
-                                        <div class="col mb-3">
+                                         
+                                        <div class="col-md-8 mb-6">
                                             <label for="validationDefault04">Full Address</label>
                                             <input type="text" name="faddr" class="form-control" id="validationDefault04" placeholder="FullAddress" required>
                                         </div>
+                                        
+                                        <div class="col-md-4 mb-3">
+                                            <label for="validationDefault04">Zip Code</label>
+                                            <input type="text" maxlength="6" name="zpcod" class="form-control" id="validationDefault04" placeholder="ZipCode" required pattern="4[0-9]{5}" title="requires 6 digits only">
+                                        </div>
+                                        
                                     </div>
                                     <center>
                                         <button class="btn btn-primary" style="align-items: center!important" name="submit1" type="submit">Save</button>
@@ -178,6 +185,7 @@
                     event.preventDefault();
                     let f = new FormData(this);
                     var fileName = $('#inputGroupFile04').val();
+                    
                     $(this).next('.custom-file-label').html(fileName);
                     var allowedExtensions = /(\.csv)$/i;
                     if (!allowedExtensions.test(fileName)) {

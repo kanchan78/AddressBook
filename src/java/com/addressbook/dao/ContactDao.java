@@ -20,7 +20,7 @@ public class ContactDao {
     public boolean saveContact(List<Contact> contacts) {
         try {
             con.setAutoCommit(false);
-            String query = "insert into contact (fname,lname,cityn,bdate,contc,faddr) values (?,?,?,?,?,?)";
+            String query = "insert into contact (fname,lname,cityn,bdate,contc,faddr,zpcod) values (?,?,?,?,?,?,?)";
             PreparedStatement pst = this.con.prepareStatement(query);
             con.setAutoCommit(false);
             for (Contact contact1 : contacts) {
@@ -30,6 +30,7 @@ public class ContactDao {
                 pst.setDate(4, (Date) contact1.getBirthdate());
                 pst.setString(5, contact1.getContact());
                 pst.setString(6, contact1.getFull_address());
+                pst.setInt(7,contact1.getZip_code());
                 pst.addBatch();
             }
             pst.executeBatch();
@@ -40,6 +41,7 @@ public class ContactDao {
         }
         return false;
     }
+    
 
     public List<Contact> listAllContacts() {
         List<Contact> contacts = new ArrayList<>();
@@ -56,6 +58,7 @@ public class ContactDao {
                 contact1.setBirthdate(resultSet.getDate("bdate"));
                 contact1.setContact(resultSet.getString("contc"));
                 contact1.setFull_address(resultSet.getString("faddr"));
+                 contact1.setZip_code(resultSet.getInt("zpcod"));
                 contact1.setReview(resultSet.getBoolean("rview"));
                 contacts.add(contact1);
             }
@@ -70,7 +73,7 @@ public class ContactDao {
         List<Contact> contacts = new ArrayList<>();
         try {
             Statement stmt = con.createStatement();
-            String query = "select * from contact where fname like '%" + search + "%' or lname like '%" + search + "%' or cityn like '%" + search + "%' or bdate like '%" + search + "%' or contc like '%" + search + "%' or faddr like '%" + search + "%'   ";
+            String query = "select * from contact where fname like '%" + search + "%' or lname like '%" + search + "%' or cityn like '%" + search + "%' or bdate like '%" + search + "%' or contc like '%" + search + "%' or faddr like '%" + search + "%' or zpcod like '%" + search + "%'   ";
             ResultSet resultSet = stmt.executeQuery(query);
             while (resultSet.next()) {
                 Contact contact1 = new Contact();
@@ -82,6 +85,7 @@ public class ContactDao {
                 contact1.setContact(resultSet.getString("contc"));
                 contact1.setFull_address(resultSet.getString("faddr"));
                 contact1.setReview(resultSet.getBoolean("rview"));
+                contact1.setZip_code(resultSet.getInt("zpcod"));
                 contacts.add(contact1);
             }
         } catch (Exception e) {
@@ -119,6 +123,7 @@ public class ContactDao {
                 contact1.setContact(resultSet.getString("contc"));
                 contact1.setFull_address(resultSet.getString("faddr"));
                 contact1.setReview(resultSet.getBoolean("rview"));
+                 contact1.setZip_code(resultSet.getInt("zpcod"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -130,7 +135,7 @@ public class ContactDao {
     public int updateContact(Contact contact1) {
         int status = 0;
         try {
-            String query = "update contact set fname=?,lname=?,cityn=?,bdate=?,contc=?,faddr=?, rview=? where conid= ?";
+            String query = "update contact set fname=?,lname=?,cityn=?,bdate=?,contc=?,faddr=?, rview=?, zpcod=? where conid= ?";
             PreparedStatement pstmt = con.prepareStatement(query);
 
             pstmt.setString(1, contact1.getFirst_name());
@@ -140,8 +145,8 @@ public class ContactDao {
             pstmt.setString(5, contact1.getContact());
             pstmt.setString(6, contact1.getFull_address());
             pstmt.setBoolean(7, contact1.getReview());
-            pstmt.setInt(8, contact1.getContact_id());
-
+            pstmt.setInt(9, contact1.getContact_id());
+            pstmt.setInt(8,contact1.getZip_code());
             status = pstmt.executeUpdate();
 
         } catch (Exception e) {

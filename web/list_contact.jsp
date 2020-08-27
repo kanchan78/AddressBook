@@ -46,6 +46,7 @@
                                 <th scope="col">Birth Date</th>
                                 <th scope="col">Contact No</th>
                                 <th scope="col">Full Address</th>
+                                   <th scope="col" > ZipCode</th>
                                 <th scope="col">Reviewed?</th>
                                 <th scope="col">Actions</th>
 
@@ -61,6 +62,7 @@
                                     <td><fmt:formatDate pattern="yyyy-MMM-dd" value="${contact.birthdate}" /></td>
                                     <td><c:out value="${contact.contact}" /></td>
                                     <td><c:out value="${contact.full_address}" /></td>
+                                     <td><c:out value="${contact.zip_code}" /></td>
                                     <c:if test="${contact.review == true}" >
                                         <td style="text-align: center"><input type="checkbox" class="checkbox-field" id="${contact.contact_id}" name="rview" checked > </td>
                                         </c:if>

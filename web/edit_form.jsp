@@ -51,16 +51,20 @@
 
                                         </div>
                                         <div class="col-md-4 mb-3">
-                                            <label for="validationDefault05">Date</label>
+                                            <label for="validationDefault05">Date of Birth</label>
                                             <input class="form-control" name="bdate"type="Date" value="<c:out value='${contact.birthdate}'/>">
 
                                         </div>
                                     </div>
                                     <div class="form-row">
-                                        <div class="col mb-3">
+                                            <div class="col-md-8 mb-6">
                                             <label for="validationDefault04">Full Address</label>
                                             <input type="text" name="faddr" class="form-control" id="validationDefault04" placeholder="FullAddress" value="<c:out value='${contact.full_address}'/>" required>
                                         </div>
+                                          <div class="col-md-4 mb-3">
+                                            <label for="validationDefault04">Zip Code</label>
+                                            <input type="text" maxlength="6" name="zpcod" class="form-control" value="<c:out value='${contact.zip_code}'/>" id="validationDefault04"  placeholder="Zip Code" required pattern="4[0-9]{5}" title="requires 6 digits only">
+                                            </div>
                                     </div>
                                     <center>
                                         <button class="btn btn-primary" style="align-items: center!important" type="submit">Save</button>
